@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "LVKeyboard.h"
 
-@interface ViewController ()
+@interface ViewController ()<LVKeyboardDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @property (nonatomic, strong) LVKeyboard *keyboard;
@@ -28,23 +28,23 @@
     
     self.keyboard = keyboard;
     self.textField.inputView = self.keyboard;
-    self.keyboard.targetTextField = self.textField;
-    
+    self.keyboard.targetTextfield = self.textField;
+    self.keyboard.delegate = self;
     [self.textField becomeFirstResponder];
 }
 
 
-//- (void)keyboard:(LVKeyboard *)keyboard didClickDeleteButton:(UIButton *)deleteBtn string:(NSMutableString *)string {
-//    self.textField.text = string;
-//}
-//
-//- (void)keyboard:(LVKeyboard *)keyboard didClickTextButton:(UIButton *)textBtn string:(NSMutableString *)string {
-//    self.textField.text = string;
-//}
-//
-//
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    [self.textField resignFirstResponder];
-//}
+- (void)keyboard:(LVKeyboard *)keyboard didClickDeleteButton:(UIButton *)deleteBtn string:(NSMutableString *)string textfield:(UITextField *)textFeild{
+    textFeild.text = string;
+}
+
+- (void)keyboard:(LVKeyboard *)keyboard didClickTextButton:(UIButton *)textBtn string:(NSMutableString *)string textfield:(UITextField *)textFeild{
+    textFeild.text = string;
+}
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.textField resignFirstResponder];
+}
 
 @end

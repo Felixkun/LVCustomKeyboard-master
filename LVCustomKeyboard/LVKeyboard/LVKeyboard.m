@@ -29,7 +29,6 @@
     if (!_letterKeyboard) {
         _letterKeyboard = [[LVLetterKeyboard alloc] initWithFrame:self.bounds];
         _letterKeyboard.delegate = self;
-        _letterKeyboard.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }
     return _letterKeyboard;
 }
@@ -107,10 +106,12 @@
 
 // 删除方法
 - (void)customKeyboardDidClickDeleteButton:(UIButton *)deleteBtn {
-
+    
     if (self.string.length > 0) {
         [self.string deleteCharactersInRange:NSMakeRange(self.string.length - 1, 1)];
-         self.targetTextField.text = self.string;
+        if ([self.delegate respondsToSelector:@selector(keyboard:didClickDeleteButton:string: textfield:)]) {
+            [self.delegate keyboard:self didClickDeleteButton:deleteBtn string:self.string textfield:self.targetTextfield];
+        }
     }
     
 }
@@ -118,8 +119,10 @@
 - (void)appendString:(UIButton *)button {
     
     [self.string appendString:button.currentTitle];
-     self.targetTextField.text = self.string;
-
+    
+    if ([self.delegate respondsToSelector:@selector(keyboard:didClickTextButton:string: textfield:)]) {
+        [self.delegate keyboard:self didClickTextButton:button string:self.string textfield:self.targetTextfield];
+    }
 }
 
 
