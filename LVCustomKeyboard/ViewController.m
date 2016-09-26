@@ -31,6 +31,7 @@
     self.keyboard.targetTextfield = self.textField;
     self.keyboard.delegate = self;
     [self.textField becomeFirstResponder];
+    self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
 }
 
 

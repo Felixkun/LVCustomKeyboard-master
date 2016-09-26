@@ -25,6 +25,16 @@
 
 @implementation LVKeyboard
 
+
+- (void)setTargetTextfield:(UITextField *)targetTextfield{
+    _targetTextfield = targetTextfield;
+    [_targetTextfield addTarget:self action:@selector(targetTextfieldValueChange:) forControlEvents:UIControlEventAllEvents];
+}
+
+- (void)targetTextfieldValueChange:(UITextField *)textfield{
+    self.string  = [NSMutableString string];
+}
+
 - (LVLetterKeyboard *)letterKeyboard {
     if (!_letterKeyboard) {
         _letterKeyboard = [[LVLetterKeyboard alloc] initWithFrame:self.bounds];
@@ -48,6 +58,9 @@
     }
     return _numberKeyboard;
 }
+
+
+
 
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -124,6 +137,7 @@
         [self.delegate keyboard:self didClickTextButton:button string:self.string textfield:self.targetTextfield];
     }
 }
+
 
 
 @end
